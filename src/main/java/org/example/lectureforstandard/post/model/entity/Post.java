@@ -1,5 +1,6 @@
 package org.example.lectureforstandard.post.model.entity;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -8,7 +9,6 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.example.lectureforstandard.comment.model.entity.Comment;
@@ -16,7 +16,6 @@ import org.example.lectureforstandard.comment.model.entity.Comment;
 @Entity
 @Getter
 @NoArgsConstructor
-@AllArgsConstructor
 @Table(name = "posts")
 public class Post {
 
@@ -26,8 +25,19 @@ public class Post {
 
     private String title;
 
-    @OneToMany(mappedBy = "post")  // Comment의 post 필드가 주인
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comment> comments = new ArrayList<>();
 
-    // getter, constructor...
+    public Post(String title) {
+        this.title = title;
+    }
+
+    public void addComment(Comment comment) {
+        this.comments.add(comment);
+        comment.setPost(this);
+    }
+
+    public void removeComment(Comment comment) {
+        this.comments.remove(comment);
+    }
 }
