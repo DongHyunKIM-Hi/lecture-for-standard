@@ -14,7 +14,6 @@ import org.example.lectureforstandard.post.model.entity.Post;
 
 @Entity
 @Getter
-@Setter
 @NoArgsConstructor
 @Table(name = "comments")
 public class Comment {
@@ -31,5 +30,9 @@ public class Comment {
 
     public Comment(String content) {
         this.content = content;
+    }
+
+    public void setPost(Post post) {
+        this.post = post;
     }
 }

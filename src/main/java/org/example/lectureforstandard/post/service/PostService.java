@@ -39,6 +39,8 @@ public class PostService {
     @Transactional
     public Post removeComment(Long postId, Long commentId) {
         Post post = getPost(postId);
+
+        // 게시글의 댓글 중에서 내가 삭제하고 싶은 댓글이 있는지 찾고 있다면 삭제 대상의 댓글 가져오기
         Comment target = post.getComments().stream()
                 .filter(comment -> comment.getId().equals(commentId))
                 .findFirst()
@@ -52,7 +54,12 @@ public class PostService {
     public Comment addCommentWithoutOwner(Long postId, String content) {
         Post post = getPost(postId);
         Comment comment = new Comment(content);
-        post.getComments().add(comment);
+
+        // 주인 아닌 쪽에만 추가
+        post.getComments().add(comment);  // DB에 반영 안 됨
+
+        // vs 주인 쪽에 설정
+        // comment.setPost(post);  // 이렇게 해야 FK 저장됨
         return commentRepository.save(comment);
     }
 }

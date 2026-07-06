@@ -25,7 +25,8 @@ public class Post {
 
     private String title;
 
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    //{CascadeType.PERSIST, CascadeType.MERGE}
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = false)
     private List<Comment> comments = new ArrayList<>();
 
     public Post(String title) {
