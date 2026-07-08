@@ -1,6 +1,7 @@
 package org.example.lectureforstandard.comment.model.entity;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -24,7 +25,8 @@ public class Comment {
 
     private String content;
 
-    @ManyToOne
+    // fetch = EAGER → comment를 조회하는 즉시 post도 함께(또는 이어서) 로딩됨
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "post_id")  // DB에서 사용할 FK 컬럼 이름
     private Post post;             // Long 대신 Post 객체로!
 
