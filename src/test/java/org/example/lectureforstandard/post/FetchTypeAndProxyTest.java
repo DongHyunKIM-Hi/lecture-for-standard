@@ -113,13 +113,18 @@ class FetchTypeAndProxyTest {
     //    아래 테스트에서 "// ▶ 여기에 브레이크포인트" 표시된 두 줄에
     //    각각 브레이크포인트를 걸고 디버그 모드로 실행해보세요.
     //
-    //    1) 첫 번째 브레이크포인트에서 found.comments 를 Evaluate 해보면
-    //       클래스가 java.util.ArrayList가 아니라
-    //       org.hibernate.collection.spi.PersistentBag(Proxy) 이고,
-    //       내부적으로 initialized=false 인 걸 볼 수 있어요.
-    //    2) getComments().size() 를 한 줄씩(Step Over) 실행한 뒤
-    //       두 번째 브레이크포인트에서 다시 확인해보면
-    //       initialized=true 로 바뀌고 실제 데이터가 채워져 있는 걸 볼 수 있어요.
+    //    ⚠️ 주의: found.comments(또는 found.getComments())를 Variables 창에서
+    //    "펼치거나(expand)" Evaluate 하지 마세요! IntelliJ는 컬렉션을 화면에
+    //    보여주려고 내부적으로 size()/iterator()를 자동 호출하는데, 이게 바로
+    //    Proxy를 깨우는 신호라서 여러분이 코드로 접근하기도 전에 디버거가
+    //    먼저 초기화를 시켜버려요(심하면 LazyInitializationException도 남).
+    //
+    //    대신 아래 로컬 변수만 확인하세요 — 부작용이 없어요.
+    //    1) 첫 번째 브레이크포인트에서 beforeAccess 변수 값을 확인 → false
+    //       (Hibernate.isInitialized()는 내부 플래그만 읽을 뿐 size()/iterator()를
+    //        호출하지 않기 때문에 안전해요)
+    //    2) getComments().size() 를 Step Over 로 실행한 뒤
+    //       두 번째 브레이크포인트에서 afterAccess 변수 값을 확인 → true
     // ─────────────────────────────────────────────
 
     @Test
