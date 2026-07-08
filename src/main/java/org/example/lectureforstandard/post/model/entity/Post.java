@@ -2,6 +2,7 @@ package org.example.lectureforstandard.post.model.entity;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -26,7 +27,8 @@ public class Post {
     private String title;
 
     //{CascadeType.PERSIST, CascadeType.MERGE}
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = false)
+    // fetch = LAZY → post.getComments() 를 실제로 호출하기 전까지는 Proxy 상태로 남아있음
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = false, fetch = FetchType.LAZY)
     private List<Comment> comments = new ArrayList<>();
 
     public Post(String title) {
