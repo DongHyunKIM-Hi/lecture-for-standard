@@ -1,7 +1,8 @@
 package org.example.lectureforstandard.post.service;
 
-import java.util.NoSuchElementException;
 import lombok.RequiredArgsConstructor;
+import org.example.lectureforstandard.comment.exception.CommentNotFoundException;
+import org.example.lectureforstandard.comment.exception.InvalidCommentContentException;
 import org.example.lectureforstandard.comment.model.entity.Comment;
 import org.example.lectureforstandard.comment.repository.CommentRepository;
 import org.example.lectureforstandard.post.exception.PostNotFoundException;
@@ -31,6 +32,9 @@ public class PostService {
     // Cascade.ALL: post만 저장해도 연관된 댓글까지 함께 INSERT 됨
     @Transactional
     public Post addComment(Long postId, String content) {
+        if (content == null || content.isBlank()) {
+            throw new InvalidCommentContentException();
+        }
         Post post = getPost(postId);
         post.addComment(new Comment(content));
         return post;
@@ -43,7 +47,7 @@ public class PostService {
         Comment target = post.getComments().stream()
                 .filter(comment -> comment.getId().equals(commentId))
                 .findFirst()
-                .orElseThrow(() -> new NoSuchElementException("comment not found: " + commentId));
+                .orElseThrow(() -> new CommentNotFoundException(commentId));
         post.removeComment(target);
         return post;
     }
