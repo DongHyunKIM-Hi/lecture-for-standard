@@ -4,6 +4,7 @@ import java.util.NoSuchElementException;
 import lombok.RequiredArgsConstructor;
 import org.example.lectureforstandard.comment.model.entity.Comment;
 import org.example.lectureforstandard.comment.repository.CommentRepository;
+import org.example.lectureforstandard.post.exception.PostNotFoundException;
 import org.example.lectureforstandard.post.model.entity.Post;
 import org.example.lectureforstandard.post.repository.PostRepository;
 import org.springframework.stereotype.Service;
@@ -21,10 +22,11 @@ public class PostService {
         return postRepository.save(new Post(title));
     }
 
+    // 실습 1 — 존재하지 않는 게시글이면 "무슨 상황인지" 이름으로 드러나는 예외를 던짐
     @Transactional(readOnly = true)
     public Post getPost(Long postId) {
         return postRepository.findById(postId)
-                .orElseThrow(() -> new NoSuchElementException("post not found: " + postId));
+                .orElseThrow(() -> new PostNotFoundException(postId));
     }
 
     // 실습 1 — Cascade: addComment로 묶어두면 post만 저장해도 댓글까지 함께 INSERT 돼요.
