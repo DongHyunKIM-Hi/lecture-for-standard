@@ -28,7 +28,7 @@ public class Post {
 
     //{CascadeType.PERSIST, CascadeType.MERGE}
     // fetch = LAZY → post.getComments() 를 실제로 호출하기 전까지는 Proxy 상태로 남아있음
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = false, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Comment> comments = new ArrayList<>();
 
     public Post(String title) {

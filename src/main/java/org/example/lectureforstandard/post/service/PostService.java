@@ -29,18 +29,13 @@ public class PostService {
                 .orElseThrow(() -> new PostNotFoundException(postId));
     }
 
-    // Cascade.ALL: post만 저장해도 연관된 댓글까지 함께 INSERT 됨
     @Transactional
     public Post addComment(Long postId, String content) {
-        if (content == null || content.isBlank()) {
-            throw new InvalidCommentContentException();
-        }
         Post post = getPost(postId);
         post.addComment(new Comment(content));
         return post;
     }
 
-    // orphanRemoval: 컬렉션에서 제거하면 트랜잭션 커밋 시 DELETE가 자동 실행됨
     // TODO(수강생 실습): 댓글을 못 찾은 경우 CommentNotFoundException을 만들어 던져보세요.
     @Transactional
     public Post removeComment(Long postId, Long commentId) {
@@ -53,7 +48,6 @@ public class PostService {
         return post;
     }
 
-    // 연관관계 주인이 아닌 쪽(post.getComments())만 건드리면 FK(post_id)가 저장되지 않음
     @Transactional
     public Comment addCommentWithoutOwner(Long postId, String content) {
         Post post = getPost(postId);

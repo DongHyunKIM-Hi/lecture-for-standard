@@ -25,6 +25,7 @@ public class CommentController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public PostResponse createComment(@PathVariable Long postId, @RequestBody CreateCommentRequest request) {
+        request.checkValid();
         return PostResponse.from(postService.addComment(postId, request.content()));
     }
 
