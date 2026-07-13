@@ -1,6 +1,5 @@
 package org.example.lectureforstandard.global.exception;
 
-import org.example.lectureforstandard.comment.exception.CommentNotFoundException;
 import org.example.lectureforstandard.comment.exception.InvalidCommentContentException;
 import org.example.lectureforstandard.post.exception.PostNotFoundException;
 import org.springframework.http.ResponseEntity;
@@ -16,11 +15,7 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(404).body(response);
     }
 
-    @ExceptionHandler(CommentNotFoundException.class)
-    public ResponseEntity<ErrorResponse> handleCommentNotFound(CommentNotFoundException e) {
-        ErrorResponse response = new ErrorResponse(404, e.getMessage());
-        return ResponseEntity.status(404).body(response);
-    }
+    // TODO(수강생 실습): CommentNotFoundException을 만들고 여기에 핸들러를 등록해보세요.
 
     @ExceptionHandler(InvalidCommentContentException.class)
     public ResponseEntity<ErrorResponse> handleInvalidCommentContent(InvalidCommentContentException e) {

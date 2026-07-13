@@ -1,7 +1,7 @@
 package org.example.lectureforstandard.post.service;
 
+import java.util.NoSuchElementException;
 import lombok.RequiredArgsConstructor;
-import org.example.lectureforstandard.comment.exception.CommentNotFoundException;
 import org.example.lectureforstandard.comment.exception.InvalidCommentContentException;
 import org.example.lectureforstandard.comment.model.entity.Comment;
 import org.example.lectureforstandard.comment.repository.CommentRepository;
@@ -41,13 +41,14 @@ public class PostService {
     }
 
     // orphanRemoval: 컬렉션에서 제거하면 트랜잭션 커밋 시 DELETE가 자동 실행됨
+    // TODO(수강생 실습): 댓글을 못 찾은 경우 CommentNotFoundException을 만들어 던져보세요.
     @Transactional
     public Post removeComment(Long postId, Long commentId) {
         Post post = getPost(postId);
         Comment target = post.getComments().stream()
                 .filter(comment -> comment.getId().equals(commentId))
                 .findFirst()
-                .orElseThrow(() -> new CommentNotFoundException(commentId));
+                .orElseThrow(() -> new NoSuchElementException("comment not found: " + commentId));
         post.removeComment(target);
         return post;
     }
