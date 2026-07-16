@@ -77,7 +77,7 @@ public class ThreadPracticeController {
 
         executor.execute(() -> {
             String workerThreadName = Thread.currentThread().getName();
-            log.info("[커스텀 풀 {} - 비동기] 작업을 처리한 쓰레드: {}", poolNumber, workerThreadName);
+            log.info("[커스텀 풀 {} - 비동기] 작업을 요청받은 쓰레드: {}", poolNumber, workerThreadName);
             try {
                 Thread.sleep(HEAVY_JOB_MILLIS);
             } catch (InterruptedException e) {
@@ -89,7 +89,10 @@ public class ThreadPracticeController {
                     "requestThread", requestThreadName,
                     "workerThread", workerThreadName
             ));
+
         });
+
+        log.info("[커스텀 풀 {} - 비동기] 요청을 받은 쓰레드: {} (반납완료)", poolNumber, requestThreadName);
 
         return deferredResult;
     }
