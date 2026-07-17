@@ -21,6 +21,12 @@ repositories {
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-webmvc'
+    // [실습 4] Tomcat 대신 다른 서블릿 컨테이너를 써보고 싶다면, 위 webmvc 스타터 줄을 아래처럼 바꿔보세요.
+    // (참고: Spring Boot 4.x부터는 Undertow 스타터가 제공되지 않습니다. 대신 Jetty로 실습합니다.)
+    // implementation('org.springframework.boot:spring-boot-starter-webmvc') {
+    //     exclude group: 'org.springframework.boot', module: 'spring-boot-starter-tomcat'
+    // }
+    // implementation 'org.springframework.boot:spring-boot-starter-jetty'
     compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'com.mysql:mysql-connector-j'
     annotationProcessor 'org.projectlombok:lombok'

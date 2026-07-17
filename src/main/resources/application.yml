@@ -18,3 +18,18 @@ logging:
   level:
     org.hibernate.SQL: debug
     org.hibernate.orm.jdbc.bind: trace
+
+server:
+  tomcat:
+    threads:
+      min-spare: 1  # 최소 여유 쓰레드 수 (실습용으로 일부러 작게 설정)
+      max: 2        # 최대 쓰레드 수 (실습용으로 일부러 작게 설정. 나중에 10~20으로 늘려서 비교해보세요)
+
+  # [실습 4] Tomcat 대신 Jetty를 써보고 싶다면?
+  # (Spring Boot 4.x부터 Undertow 스타터는 더 이상 제공되지 않아 Jetty로 대체합니다)
+  # 1) build.gradle에서 tomcat 스타터를 빼고 jetty 스타터를 추가한다 (build.gradle 주석 참고)
+  # 2) 위 tomcat 설정은 지우거나 주석 처리하고, 아래 주석을 해제한다
+  # jetty:
+  #   threads:
+  #     min: 4   # Jetty는 내부적으로 acceptor/selector용 쓰레드도 필요해서 1~2처럼 극단적으로 작은 값은 서버가 아예 못 뜹니다
+  #     max: 8   # 실습용으로 작게 설정. 10개 동시 요청 정도로 대기 현상을 확인하세요
