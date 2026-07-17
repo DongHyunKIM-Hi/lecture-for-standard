@@ -16,4 +16,10 @@ public class FilterPracticeController {
         Object userId = request.getAttribute(LoginCheckFilter.USER_ID_ATTRIBUTE);
         return Map.of("userId", String.valueOf(userId));
     }
+
+    // AdminCheckFilter를 통과한 요청만 여기까지 들어올 수 있어요.
+    @GetMapping("/admin")
+    public Map<String, Object> getAdminOnlyInfo() {
+        return Map.of("message", "관리자만 볼 수 있는 정보예요.");
+    }
 }
