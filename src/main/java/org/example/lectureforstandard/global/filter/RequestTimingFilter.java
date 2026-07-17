@@ -10,7 +10,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
-// 레퍼런스 예시 — filterChain.doFilter()를 기준으로 앞/뒤에서 로직을 실행하는 필터의 기본 모양이에요.
+// 요청 처리 시간을 재는 필터 — filterChain.doFilter()를 기준으로 앞/뒤에서 로직이 실행되는
+// 필터의 기본 동작을 보여줘요. @Order(1)이라 세 필터 중 가장 먼저 실행돼요.
 @Component
 @Order(1)
 @Slf4j
