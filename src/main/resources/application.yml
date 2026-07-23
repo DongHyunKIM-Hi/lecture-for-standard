@@ -14,6 +14,12 @@ spring:
         generate_statistics: true
     defer-datasource-initialization: true
 
+# [10회차] JWT 발급/검증 실습용 설정
+jwt:
+  # HS256은 최소 256비트(32바이트) 이상의 키가 필요해요. 실습용 값이니 실제 서비스에서는 반드시 별도로 관리하세요.
+  secret-key: standard-lecture-jwt-practice-secret-key-32bytes-minimum
+  expiration-millis: 3600000 # 1시간
+
 logging:
   level:
     org.hibernate.SQL: debug
