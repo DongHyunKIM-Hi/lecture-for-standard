@@ -21,6 +21,8 @@ repositories {
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-webmvc'
+    // [11회차] Spring Security 실습용 - 필터들의 군대(Security Filter Chain)를 가져와요.
+    implementation 'org.springframework.boot:spring-boot-starter-security'
     // [실습 4] Tomcat 대신 다른 서블릿 컨테이너를 써보고 싶다면, 위 webmvc 스타터 줄을 아래처럼 바꿔보세요.
     // (참고: Spring Boot 4.x부터는 Undertow 스타터가 제공되지 않습니다. 대신 Jetty로 실습합니다.)
     // implementation('org.springframework.boot:spring-boot-starter-webmvc') {
